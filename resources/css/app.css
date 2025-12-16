@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Swiss Style Typography */
+@layer base {
+    @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    }
+    
+    body {
+        @apply font-sans antialiased bg-white text-swiss-black;
+        letter-spacing: -0.011em;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-bold tracking-tight;
+    }
+}
+
+/* Swiss Grid System */
+@layer components {
+    .swiss-container {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    
+    .swiss-grid {
+        @apply grid grid-cols-12 gap-4 md:gap-6 lg:gap-8;
+    }
+    
+    /* Typography Scale */
+    .swiss-h1 {
+        @apply text-5xl md:text-6xl lg:text-7xl font-bold leading-none;
+    }
+    
+    .swiss-h2 {
+        @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight;
+    }
+    
+    .swiss-h3 {
+        @apply text-3xl md:text-4xl font-bold leading-tight;
+    }
+    
+    .swiss-h4 {
+        @apply text-2xl md:text-3xl font-bold;
+    }
+    
+    .swiss-body {
+        @apply text-base leading-relaxed;
+    }
+    
+    .swiss-small {
+        @apply text-sm leading-normal;
+    }
+    
+    /* Button Styles */
+    .btn-primary {
+        @apply px-8 py-3 bg-swiss-red text-white font-medium tracking-wide
+               hover:bg-opacity-90 transition-all duration-200
+               focus:outline-none focus:ring-2 focus:ring-swiss-red focus:ring-offset-2;
+    }
+    
+    .btn-secondary {
+        @apply px-8 py-3 border-2 border-swiss-black text-swiss-black font-medium tracking-wide
+               hover:bg-swiss-black hover:text-white transition-all duration-200
+               focus:outline-none focus:ring-2 focus:ring-swiss-black focus:ring-offset-2;
+    }
+    
+    .btn-ghost {
+        @apply px-6 py-2 text-swiss-black font-medium
+               hover:bg-swiss-gray-50 transition-all duration-200;
+    }
+    
+    /* Card Styles */
+    .swiss-card {
+        @apply bg-white border border-swiss-gray-200 
+               hover:border-swiss-black transition-all duration-200;
+    }
+    
+    /* Input Styles */
+    .swiss-input {
+        @apply w-full px-4 py-3 border-2 border-swiss-gray-300 
+               focus:border-swiss-black focus:ring-0 
+               transition-all duration-200 font-medium;
+    }
+}
+
+/* Animations */
+@layer utilities {
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
