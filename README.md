@@ -261,7 +261,7 @@ VPP_OSS_T10/
 
 ## 📞 Liên hệ
 
-- **Email:** phankhoaajt@gmail.com
+- **Email:** phandangkhoawork@gmail.com
 - **GitHub:** [KhoaPhanix](https://github.com/KhoaPhanix)
 - **Repository:** [VPP_OSS_T10](https://github.com/KhoaPhanix/VPP_OSS_T10)
 
