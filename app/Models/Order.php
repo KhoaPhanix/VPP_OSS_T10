@@ -63,6 +63,11 @@ class Order extends Model
         return $query->where('status', 'rejected');
     }
 
+    public function scopeCompleted($query)
+    {
+        return $query->where('status', 'completed');
+    }
+
     // Helper methods
     public function isPending()
     {
@@ -77,6 +82,11 @@ class Order extends Model
     public function isRejected()
     {
         return $this->status === 'rejected';
+    }
+
+    public function isCompleted()
+    {
+        return $this->status === 'completed';
     }
 
     public function canBeCancelled()

@@ -4,11 +4,12 @@ Dự án xây dựng hệ thống website thương mại điện tử chuyên cu
 
 ## 🛠️ Công nghệ sử dụng
 
-- **Framework:** Laravel 10.x
-- **PHP:** >= 8.1
+- **Framework:** Laravel 9.52.21
+- **PHP:** >= 8.0
 - **Database:** MySQL
-- **Frontend:** Bootstrap 5.3, Blade Templates
-- **Authentication:** Laravel Sanctum
+- **Frontend:** TailwindCSS 3.4, Alpine.js 3.13, Blade Templates
+- **Build Tool:** Vite 5.4
+- **Authentication:** Laravel built-in Auth
 
 ## 👥 Thành viên nhóm phát triển
 
@@ -22,10 +23,11 @@ Dự án xây dựng hệ thống website thương mại điện tử chuyên cu
 
 ## 📋 Yêu cầu hệ thống
 
-- PHP >= 8.1
-- Composer
-- MySQL >= 5.7
-- Node.js & NPM (optional, cho asset compilation)
+- PHP >= 8.0
+- Composer >= 2.0
+- MySQL >= 5.7 hoặc 8.0
+- Node.js >= 16.x & NPM
+- Git
 
 ---
 
@@ -41,7 +43,11 @@ cd VPP_OSS_T10
 ### 2. Cài đặt dependencies
 
 ```bash
+# Cài đặt PHP dependencies
 composer install
+
+# Cài đặt Node.js dependencies
+npm install
 ```
 
 ### 3. Cấu hình môi trường
@@ -49,6 +55,9 @@ composer install
 ```bash
 # Copy file .env.example thành .env
 cp .env.example .env
+
+# Hoặc trên Windows
+copy .env.example .env
 
 # Generate application key
 php artisan key:generate
@@ -64,7 +73,7 @@ DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=vpp_oss_t10
 DB_USERNAME=root
-DB_PASSWORD=your_password
+DB_PASSWORD=
 ```
 
 ### 5. Tạo database và chạy migration
@@ -78,23 +87,49 @@ exit;
 # Chạy migration
 php artisan migrate
 
-# Seed dữ liệu mẫu
+# Seed dữ liệu mẫu (bao gồm tài khoản admin và sản phẩm mẫu)
 php artisan db:seed
 ```
 
-### 6. Tạo symbolic link cho storage
+### 6. Build frontend assets
+
+```bash
+# Build assets với Vite
+npm run build
+
+# Hoặc chạy dev mode với hot reload
+npm run dev
+```
+
+### 7. Tạo symbolic link cho storage
 
 ```bash
 php artisan storage:link
 ```
 
-### 7. Chạy development server
+### 8. Chạy development server
 
 ```bash
 php artisan serve
 ```
 
-Truy cập: `http://localhost:8000`
+Truy cập: `http://127.0.0.1:8000`
+
+---
+
+## 👤 Tài khoản mặc định
+
+Sau khi chạy `php artisan db:seed`, hệ thống sẽ tạo sẵn các tài khoản sau:
+
+### Tài khoản Admin
+- **Username:** admin
+- **Password:** admin123
+- **Truy cập:** http://127.0.0.1:8000/admin/dashboard
+
+### Tài khoản Khách hàng
+- **Username:** khachhang1
+- **Password:** password
+- **Truy cập:** http://127.0.0.1:8000
 
 ---
 
@@ -180,43 +215,79 @@ VPP_OSS_T10/
 
 ---
 
-## 🚀 Tổng quan hệ thống
+## ✨ Tính năng chính
 
-Hệ thống phục vụ hai đối tượng chính:
-1.  **Khách hàng (Thành viên):** Người dùng đã đăng ký và xác nhận thành viên, có thể mua hàng trực tuyến.
-2.  **Quản trị viên (Admin):** Người vận hành, chịu trách nhiệm duyệt đơn hàng, quản lý kho và xem báo cáo.
+### Dành cho Khách hàng
+- ✅ Đăng ký, đăng nhập tài khoản
+- ✅ Xem danh sách sản phẩm theo danh mục
+- ✅ Tìm kiếm sản phẩm
+- ✅ Xem chi tiết sản phẩm
+- ✅ Thêm sản phẩm vào giỏ hàng
+- ✅ Quản lý giỏ hàng (cập nhật số lượng, xóa)
+- ✅ Đặt hàng và thanh toán
+- ✅ Xem lịch sử đơn hàng
+- ✅ Chat với admin
+
+### Dành cho Admin
+- ✅ Dashboard thống kê tổng quan
+- ✅ Quản lý sản phẩm (thêm, sửa, xóa)
+- ✅ Quản lý danh mục
+- ✅ Quản lý đơn hàng (duyệt, từ chối, hoàn thành)
+- ✅ Báo cáo doanh thu theo tuần/tháng/quý
+- ✅ Quản lý tồn kho
+- ✅ Chat với khách hàng
 
 ---
 
-## ✨ Tính năng chính
+## 🛡️ Bảo mật
 
-### 1. Quản lý Sản phẩm & Danh mục
-* **Phân loại sản phẩm:** Quản lý theo nhóm (Bút viết, Giấy tờ, Sổ tay, Dụng cụ học tập, Thiết bị văn phòng...) để dễ dàng tra cứu và thống kê.
-* **Thông tin chi tiết:** Mỗi sản phẩm bao gồm mã định danh, tên, mô tả, đơn vị tính, hình ảnh, giá bán, số lượng tồn kho và nhà cung cấp.
-* **Quản lý kho:** Admin có quyền thêm mới sản phẩm/loại sản phẩm và cập nhật số lượng tồn kho khi có hàng nhập.
+- SQL Injection prevention với Eloquent ORM
+- CSRF Protection
+- Password Hashing với bcrypt
+- XSS Protection
+- Middleware Authentication & Authorization
 
-### 2. Quản lý Thành viên
-* **Lưu trữ thông tin:** Tên đăng nhập, mật khẩu, họ tên, giới tính, ngày sinh, địa chỉ, số điện thoại và hình đại diện.
-* **Bảo mật:** Yêu cầu đăng nhập để thực hiện mua hàng nhằm cá nhân hóa và bảo mật.
+---
 
-### 3. Quy trình Đặt hàng (Order Flow)
-Hệ thống tuân thủ quy trình xử lý đơn hàng chặt chẽ:
-1.  **Giỏ hàng:** Thành viên chọn sản phẩm, thêm/bớt hoặc chỉnh sửa số lượng trước khi gửi.
-2.  **Gửi đơn hàng:** Sau khi thành viên gửi yêu cầu, đơn hàng được chuyển đến Admin.
-    * *Lưu ý:* Tại bước này, khách hàng **không được phép hủy hoặc chỉnh sửa** để tránh xung đột dữ liệu.
-3.  **Duyệt đơn:** Admin xem xét đơn hàng:
-    * **Duyệt:** Đơn hàng hợp lệ, tiến hành giao hàng.
-    * **Từ chối:** Phải cung cấp lý do cụ thể cho khách hàng.
-4.  **Chính sách sau duyệt:** Khách hàng không được hủy/trả hàng sau khi đơn đã duyệt (trừ trường hợp hàng lỗi/hỏng hóc theo chính sách đổi trả).
+## 🤝 Đóng góp
 
-### 4. Hệ thống Giao tiếp (Chat)
-* Hỗ trợ tính năng chat trực tuyến[cite: 28].
-* Cho phép thành viên trao đổi với nhau hoặc liên hệ Admin để nhận tư vấn, hỗ trợ kỹ thuật.
+1. Fork dự án
+2. Tạo branch mới (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Tạo Pull Request
 
-### 5. Thống kê & Báo cáo
-Admin có thể theo dõi hiệu quả kinh doanh qua các chỉ số:
-* **Doanh thu:** Báo cáo theo tuần, tháng, quý.
-* **Phân tích hành vi:** Thời gian bán hàng cao điểm theo giờ trong ngày.
+---
+
+## 📞 Liên hệ
+
+- **Email:** phankhoaajt@gmail.com
+- **GitHub:** [KhoaPhanix](https://github.com/KhoaPhanix)
+- **Repository:** [VPP_OSS_T10](https://github.com/KhoaPhanix/VPP_OSS_T10)
+
+---
+
+## 📄 License
+
+Dự án này được phát triển cho mục đích học tập.
+
+---
+
+## 📸 Screenshots
+
+### Trang chủ
+Hiển thị danh sách sản phẩm với giao diện Swiss design hiện đại.
+
+### Admin Dashboard
+Thống kê tổng quan về doanh thu, đơn hàng, sản phẩm.
+
+### Quản lý đơn hàng
+Duyệt, từ chối, hoàn thành đơn hàng với giao diện trực quan.
+
+---
+
+**Cảm ơn bạn đã quan tâm đến dự án VPP_OSS_T10! 🚀**
+
 * **Sản phẩm nổi bật:** Danh sách 5 sản phẩm bán chạy nhất trong tuần.
 
 ---

@@ -50,7 +50,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'date_of_birth' => 'date',
         'is_verified' => 'boolean',
-        'password' => 'hashed',
     ];
 
     // Relationships

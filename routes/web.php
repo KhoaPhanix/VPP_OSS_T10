@@ -83,6 +83,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/orders/{order}', [OrderManagementController::class, 'show'])->name('orders.show');
     Route::post('/orders/{order}/approve', [OrderManagementController::class, 'approve'])->name('orders.approve');
     Route::post('/orders/{order}/reject', [OrderManagementController::class, 'reject'])->name('orders.reject');
+    Route::post('/orders/{order}/complete', [OrderManagementController::class, 'complete'])->name('orders.complete');
 
     // Reports
     Route::get('/reports/revenue', [ReportController::class, 'revenue'])->name('reports.revenue');

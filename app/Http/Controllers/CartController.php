@@ -45,15 +45,24 @@ class CartController extends Controller
             return back()->with('error', 'Không đủ hàng trong kho!');
         }
 
-        $cart = Cart::updateOrCreate(
-            [
+        $existingCart = Cart::where('user_id', Auth::id())
+            ->where('product_id', $productId)
+            ->first();
+
+        if ($existingCart) {
+            $newQuantity = $existingCart->quantity + (int) $request->quantity;
+            if (!$product->hasStock($newQuantity)) {
+                return back()->with('error', 'Không đủ hàng trong kho!');
+            }
+            $existingCart->update(['quantity' => $newQuantity]);
+            $cart = $existingCart;
+        } else {
+            $cart = Cart::create([
                 'user_id' => Auth::id(),
                 'product_id' => $productId,
-            ],
-            [
-                'quantity' => \DB::raw("quantity + {$request->quantity}"),
-            ]
-        );
+                'quantity' => (int) $request->quantity,
+            ]);
+        }
 
         return redirect()->route('cart.index')->with('success', 'Đã thêm vào giỏ hàng!');
     }

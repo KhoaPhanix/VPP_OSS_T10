@@ -121,4 +121,23 @@ class OrderManagementController extends Controller
 
         return back()->with('success', 'Đơn hàng đã bị từ chối!');
     }
+
+    /**
+     * Hoàn thành đơn hàng (sau khi giao hàng thành công)
+     */
+    public function complete($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if (!$order->isApproved()) {
+            return back()->with('error', 'Chỉ có thể hoàn thành đơn hàng đã được duyệt!');
+        }
+
+        $order->update([
+            'status' => 'completed',
+            'completed_at' => now(),
+        ]);
+
+        return back()->with('success', 'Đơn hàng đã hoàn thành!');
+    }
 }
