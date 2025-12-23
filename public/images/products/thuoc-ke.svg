@@ -1,0 +1,10 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#f0f0f0"/>
+  <text x="200" y="200" font-family="Arial" font-size="24" fill="#333" text-anchor="middle">Thước Kẻ</text>
+  <rect x="100" y="230" width="200" height="30" fill="#e0e0e0" stroke="#333" stroke-width="2"/>
+  <line x1="110" y1="230" x2="110" y2="260" stroke="#333" stroke-width="1"/>
+  <line x1="150" y1="230" x2="150" y2="260" stroke="#333" stroke-width="1"/>
+  <line x1="190" y1="230" x2="190" y2="260" stroke="#333" stroke-width="1"/>
+  <line x1="230" y1="230" x2="230" y2="260" stroke="#333" stroke-width="1"/>
+  <line x1="270" y1="230" x2="270" y2="260" stroke="#333" stroke-width="1"/>
+</svg>
