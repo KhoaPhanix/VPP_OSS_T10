@@ -5,54 +5,60 @@
 @section('content')
 
 <!-- Page Header -->
-<section class="border-b-2 border-swiss-black bg-gradient-to-r from-white via-swiss-gray-50 to-white">
-    <div class="swiss-container py-12">
-        <h1 class="swiss-h2 mb-2">TẤT CẢ SẢN PHẨM</h1>
-        <div class="w-16 h-1 bg-gradient-to-r from-swiss-red to-red-700"></div>
+<section class="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 py-8">
+    <div class="swiss-container">
+        <h1 class="text-4xl font-bold text-white mb-2">TẤT CẢ SẢN PHẨM</h1>
+        <p class="text-red-100">{{ $products->total() }} sản phẩm</p>
     </div>
 </section>
 
 <!-- Filters & Products -->
-<section class="swiss-container py-12">
+<section class="swiss-container py-8">
     <div class="swiss-grid">
         
         <!-- Sidebar Filters -->
         <aside class="col-span-12 md:col-span-3" x-data="productFilters">
-            <div class="sticky top-24">
+            <div class="sticky top-24 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                
+                <!-- Debug Info (Remove in production) -->
+                <div class="mb-4 p-3 bg-gray-100 rounded text-xs" x-show="true">
+                    <div><strong>Category:</strong> <span x-text="category || 'None'"></span></div>
+                    <div><strong>Sort:</strong> <span x-text="sortBy"></span></div>
+                    <div><strong>Search:</strong> <span x-text="searchQuery || 'None'"></span></div>
+                </div>
                 
                 <!-- Search -->
-                <div class="mb-8">
-                    <label class="font-bold mb-3 block tracking-wide">TÌM KIẾM</label>
+                <div class="mb-6">
+                    <label class="font-bold mb-3 block text-gray-900">TÌM KIẾM</label>
                     <input type="text" 
                            x-model="searchQuery"
                            @keyup.enter="applyFilters()"
                            placeholder="Nhập tên sản phẩm..."
-                           class="swiss-input">
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
                 </div>
                 
                 <!-- Categories -->
-                <div class="mb-8">
-                    <label class="font-bold mb-3 block tracking-wide">DANH MỤC</label>
+                <div class="mb-6">
+                    <label class="font-bold mb-3 block text-gray-900">DANH MỤC</label>
                     <div class="space-y-2">
-                        <label class="flex items-center cursor-pointer group">
+                        <label class="flex items-center cursor-pointer group p-2 rounded hover:bg-gray-50">
                             <input type="radio" 
                                    name="category" 
                                    value="" 
                                    x-model="category"
                                    @change="applyFilters()"
-                                   class="mr-3">
-                            <span class="group-hover:text-swiss-red transition-colors">Tất cả</span>
+                                   class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
+                            <span class="ml-3 text-gray-700 group-hover:text-red-600 transition-colors">Tất cả</span>
                         </label>
                         @foreach($categories as $cat)
-                            <label class="flex items-center cursor-pointer group">
+                            <label class="flex items-center cursor-pointer group p-2 rounded hover:bg-gray-50">
                                 <input type="radio" 
                                        name="category" 
                                        value="{{ $cat->id }}" 
                                        x-model="category"
                                        @change="applyFilters()"
-                                       {{ request('category') == $cat->id ? 'checked' : '' }}
-                                       class="mr-3">
-                                <span class="group-hover:text-swiss-red transition-colors">
+                                       class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
+                                <span class="ml-3 text-gray-700 group-hover:text-red-600 transition-colors">
                                     {{ $cat->name }}
                                 </span>
                             </label>
@@ -61,11 +67,11 @@
                 </div>
                 
                 <!-- Sort -->
-                <div class="mb-8">
-                    <label class="font-bold mb-3 block tracking-wide">SẮP XẾP</label>
+                <div class="mb-6">
+                    <label class="font-bold mb-3 block text-gray-900">SẮP XẾP</label>
                     <select x-model="sortBy" 
                             @change="applyFilters()"
-                            class="swiss-input">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
                         <option value="name">Tên A-Z</option>
                         <option value="price">Giá thấp → cao</option>
                         <option value="-price">Giá cao → thấp</option>
@@ -75,7 +81,7 @@
                 
                 <!-- Reset -->
                 <button @click="category = ''; sortBy = 'name'; searchQuery = ''; applyFilters()"
-                        class="btn-secondary w-full">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium">
                     XÓA BỘ LỌC
                 </button>
             </div>
@@ -85,20 +91,21 @@
         <div class="col-span-12 md:col-span-9">
             
             <!-- Results Count -->
-            <div class="flex items-center justify-between mb-8 pb-4 border-b border-swiss-gray-300">
-                <p class="font-medium">
-                    <span class="text-2xl font-bold">{{ $products->total() }}</span> sản phẩm
-                </p>
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Sản phẩm</h2>
+                    <p class="text-gray-600">{{ $products->total() }} sản phẩm có sẵn</p>
+                </div>
                 
                 <!-- View Toggle (optional) -->
-                <div class="hidden md:flex space-x-2">
-                    <button class="w-10 h-10 border-2 border-swiss-black bg-swiss-black text-white">
-                        <svg class="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                <div class="hidden md:flex space-x-2 bg-gray-100 p-1 rounded-lg">
+                    <button class="p-2 bg-red-600 text-white rounded">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                         </svg>
                     </button>
-                    <button class="w-10 h-10 border-2 border-swiss-black hover:bg-swiss-black hover:text-white transition-all">
-                        <svg class="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                    <button class="p-2 text-gray-600 hover:bg-white hover:text-gray-900 rounded transition-all">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
                         </svg>
                     </button>

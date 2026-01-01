@@ -50,7 +50,7 @@
                    class="group bg-white rounded-lg p-4 hover:shadow-lg transition-all duration-300">
                     <div class="aspect-square bg-gray-100 rounded-lg mb-3 overflow-hidden">
                         @if($category->image)
-                            <img src="{{ $category->image }}" 
+                            <img src="{{ Str::startsWith($category->image, 'http') ? $category->image : asset($category->image) }}" 
                                  alt="{{ $category->name }}"
                                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         @else

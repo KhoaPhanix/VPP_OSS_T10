@@ -31,10 +31,25 @@ class ProductController extends Controller
 
         // Sort
         $sortBy = $request->get('sort', 'name');
-        $sortOrder = $request->get('order', 'asc');
-        $query->orderBy($sortBy, $sortOrder);
+        
+        // Handle sort with prefix for direction
+        if (str_starts_with($sortBy, '-')) {
+            $sortField = substr($sortBy, 1);
+            $sortOrder = 'desc';
+        } else {
+            $sortField = $sortBy;
+            $sortOrder = 'asc';
+        }
+        
+        // Validate sort field
+        $allowedSorts = ['name', 'price', 'created_at'];
+        if (in_array($sortField, $allowedSorts)) {
+            $query->orderBy($sortField, $sortOrder);
+        } else {
+            $query->orderBy('name', 'asc');
+        }
 
-        $products = $query->paginate(12);
+        $products = $query->paginate(12)->appends($request->except('page'));
         $categories = Category::active()->get();
 
         return view('products.index', compact('products', 'categories'));

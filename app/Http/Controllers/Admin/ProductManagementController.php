@@ -57,9 +57,18 @@ class ProductManagementController extends Controller
             'category_id' => 'required|exists:categories,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
             'is_featured' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $validated['slug'] = Str::slug($request->name);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/products'), $filename);
+            $validated['image'] = 'images/products/' . $filename;
+        }
 
         $product = Product::create($validated);
 
@@ -109,9 +118,23 @@ class ProductManagementController extends Controller
             'supplier_id' => 'nullable|exists:suppliers,id',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $validated['slug'] = Str::slug($request->name);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/products'), $filename);
+            $validated['image'] = 'images/products/' . $filename;
+            
+            // Delete old image if exists
+            if ($product->image && file_exists(public_path($product->image))) {
+                @unlink(public_path($product->image));
+            }
+        }
 
         $product->update($validated);
 

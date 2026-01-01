@@ -3,8 +3,6 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
-Alpine.start();
-
 // Cart functionality
 Alpine.data('cart', () => ({
     count: 0,
@@ -61,17 +59,44 @@ Alpine.data('cart', () => ({
 
 // Product filters
 Alpine.data('productFilters', () => ({
-    category: '',
-    sortBy: 'name',
-    searchQuery: '',
+    category: new URLSearchParams(window.location.search).get('category') || '',
+    sortBy: new URLSearchParams(window.location.search).get('sort') || 'name',
+    searchQuery: new URLSearchParams(window.location.search).get('search') || '',
+    
+    init() {
+        console.log('Product Filters Initialized:', {
+            category: this.category,
+            sortBy: this.sortBy,
+            searchQuery: this.searchQuery
+        });
+    },
     
     applyFilters() {
-        const params = new URLSearchParams();
-        if (this.category) params.set('category', this.category);
-        if (this.sortBy) params.set('sort', this.sortBy);
-        if (this.searchQuery) params.set('search', this.searchQuery);
+        console.log('Applying filters:', {
+            category: this.category,
+            sortBy: this.sortBy,
+            searchQuery: this.searchQuery
+        });
         
-        window.location.href = `?${params.toString()}`;
+        const params = new URLSearchParams();
+        
+        if (this.searchQuery && this.searchQuery.trim() !== '') {
+            params.set('search', this.searchQuery.trim());
+        }
+        
+        if (this.category && this.category !== '') {
+            params.set('category', this.category);
+        }
+        
+        if (this.sortBy && this.sortBy !== 'name') {
+            params.set('sort', this.sortBy);
+        }
+        
+        const queryString = params.toString();
+        const newUrl = window.location.pathname + (queryString ? '?' + queryString : '');
+        
+        console.log('Navigating to:', newUrl);
+        window.location.href = newUrl;
     }
 }));
 
@@ -83,3 +108,6 @@ Alpine.data('mobileMenu', () => ({
         this.open = !this.open;
     }
 }));
+
+// Start Alpine
+Alpine.start();

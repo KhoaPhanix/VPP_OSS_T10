@@ -17,12 +17,12 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Bút viết', 
                 'description' => 'Các loại bút bi, bút mực, bút chì...',
-                'image' => 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=600&h=600&fit=crop'
+                'image' => 'images/products/butviet.jpg'
             ],
             [
                 'name' => 'Giấy tờ', 
                 'description' => 'Giấy in, giấy photo, giấy note...',
-                'image' => 'https://images.unsplash.com/photo-1544256718-3bcf237f3974?w=600&h=600&fit=crop'
+                'image' => 'images/products/giayto.jpg'
             ],
             [
                 'name' => 'Sổ tay', 
@@ -32,17 +32,17 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Dụng cụ học tập', 
                 'description' => 'Thước kẻ, compa, tẩy, gọt bút chì...',
-                'image' => 'https://images.unsplash.com/photo-1612538498456-e861df91d4d0?w=600&h=600&fit=crop'
+                'image' => 'images/products/dungcuhoctap.jpg'
             ],
             [
                 'name' => 'Thiết bị văn phòng', 
                 'description' => 'Máy tính, bàn phím, chuột, máy in...',
-                'image' => 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=600&h=600&fit=crop'
+                'image' => 'images/products/thietbivanphong.jpg'
             ],
             [
                 'name' => 'Kẹp & Bấm', 
                 'description' => 'Kẹp giấy, bấm ghim, kim bấm...',
-                'image' => 'https://images.unsplash.com/photo-1611537568047-33592b7e8098?w=600&h=600&fit=crop'
+                'image' => 'images/products/kepbam.jpg'
             ],
             [
                 'name' => 'File & Folder', 
@@ -52,7 +52,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Băng keo & Keo dán', 
                 'description' => 'Băng keo trong, keo dán giấy...',
-                'image' => 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=600&h=600&fit=crop'
+                'image' => 'https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=600&h=600&fit=crop'
             ],
         ];
 
