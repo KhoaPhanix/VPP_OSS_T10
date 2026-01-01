@@ -1,24 +1,21 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Swiss Style Typography */
 @layer base {
-    @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    }
-    
     body {
         @apply font-sans antialiased bg-white text-swiss-black;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         letter-spacing: -0.011em;
     }
     
     h1, h2, h3, h4, h5, h6 {
         @apply font-bold tracking-tight;
+        font-family: 'Inter', sans-serif;
     }
 }
 

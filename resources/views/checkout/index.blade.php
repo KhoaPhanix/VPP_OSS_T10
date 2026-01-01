@@ -8,8 +8,8 @@
     
     <!-- Header -->
     <div class="mb-12">
-        <h1 class="swiss-h2 mb-4">THANH TOÁN</h1>
-        <div class="w-16 h-1 bg-swiss-red"></div>
+        <h1 class="swiss-h2 mb-4 bg-gradient-to-r from-swiss-black to-swiss-red bg-clip-text text-transparent">THANH TOÁN</h1>
+        <div class="w-16 h-1 bg-gradient-to-r from-swiss-red to-red-700"></div>
     </div>
 
     <form action="{{ route('checkout.process') }}" method="POST">
@@ -21,7 +21,7 @@
             <div class="col-span-12 lg:col-span-7">
                 
                 <!-- Customer Info -->
-                <div class="border-2 border-swiss-black p-8 mb-8">
+                <div class="border-2 border-swiss-black p-8 mb-8 shadow-xl rounded-lg bg-gradient-to-br from-white to-swiss-gray-50">
                     <h2 class="font-bold text-xl mb-6 tracking-wide">THÔNG TIN KHÁCH HÀNG</h2>
                     
                     <div class="space-y-6">

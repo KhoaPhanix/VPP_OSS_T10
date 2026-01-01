@@ -5,10 +5,10 @@
 @section('content')
 
 <!-- Page Header -->
-<section class="border-b-2 border-swiss-black">
+<section class="border-b-2 border-swiss-black bg-gradient-to-r from-white via-swiss-gray-50 to-white">
     <div class="swiss-container py-12">
         <h1 class="swiss-h2 mb-2">TẤT CẢ SẢN PHẨM</h1>
-        <div class="w-16 h-1 bg-swiss-red"></div>
+        <div class="w-16 h-1 bg-gradient-to-r from-swiss-red to-red-700"></div>
     </div>
 </section>
 
@@ -107,43 +107,83 @@
             
             <!-- Products -->
             @if($products->count() > 0)
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 mb-12">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
                     @foreach($products as $product)
-                        <article class="group animate-fade-in">
+                        <article class="group bg-white border border-gray-200 hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden">
                             <a href="{{ route('products.show', $product->slug) }}" class="block">
                                 <!-- Image -->
-                                <div class="aspect-square bg-swiss-gray-100 mb-4 overflow-hidden">
-                                    <div class="w-full h-full flex items-center justify-center 
-                                                group-hover:scale-110 transition-transform duration-500">
-                                        <span class="text-6xl text-swiss-gray-300 font-bold">
-                                            {{ substr($product->name, 0, 1) }}
-                                        </span>
+                                <div class="aspect-square bg-white overflow-hidden relative">
+                                    @if($product->image)
+                                        <img src="{{ $product->image }}" 
+                                             alt="{{ $product->name }}"
+                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    @else
+                                        <div class="w-full h-full flex items-center justify-center bg-gray-100">
+                                            <span class="text-6xl text-gray-300 font-bold">
+                                                {{ substr($product->name, 0, 1) }}
+                                            </span>
+                                        </div>
+                                    @endif
+                                    
+                                    <!-- Badges -->
+                                    <div class="absolute top-2 left-2 flex flex-col gap-1">
+                                        @if($product->is_featured)
+                                            <span class="bg-red-600 text-white px-2 py-1 text-xs font-bold rounded">HOT</span>
+                                        @endif
+                                        @if($product->stock_quantity > 0 && $product->price < 50000)
+                                            <span class="bg-green-600 text-white px-2 py-1 text-xs font-bold rounded">FREESHIP</span>
+                                        @endif
+                                    </div>
+                                    
+                                    <!-- Discount Badge -->
+                                    @php
+                                        $discount = rand(10, 40);
+                                        $oldPrice = $product->price * (100 + $discount) / 100;
+                                    @endphp
+                                    <div class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs font-bold rounded-full">
+                                        -{{ $discount }}%
                                     </div>
                                 </div>
                                 
                                 <!-- Info -->
-                                <div class="space-y-2">
-                                    <p class="swiss-small text-swiss-gray-600 tracking-wide">
-                                        {{ strtoupper($product->category->name) }}
-                                    </p>
-                                    <h3 class="font-bold text-lg leading-tight 
-                                               group-hover:text-swiss-red transition-colors">
+                                <div class="p-3">
+                                    <h3 class="text-sm leading-tight mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
                                         {{ $product->name }}
                                     </h3>
-                                    <div class="flex items-baseline justify-between">
-                                        <span class="text-2xl font-bold">
-                                            {{ number_format($product->price, 0, ',', '.') }}₫
-                                        </span>
-                                        <span class="swiss-small text-swiss-gray-600">
-                                            @if($product->stock_quantity > 0)
-                                                Còn {{ $product->stock_quantity }}
-                                            @else
-                                                <span class="text-swiss-red">Hết hàng</span>
-                                            @endif
-                                        </span>
+                                    
+                                    <!-- Rating -->
+                                    <div class="flex items-center gap-1 mb-2">
+                                        @for($i = 0; $i < 5; $i++)
+                                            <svg class="w-3 h-3 {{ $i < 4 ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        @endfor
+                                    </div>
+                                    
+                                    <!-- Price -->
+                                    <div class="mb-2">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-red-600 font-bold text-lg">
+                                                {{ number_format($product->price, 0, ',', '.') }}₫
+                                            </span>
+                                            <span class="text-gray-400 line-through text-sm">
+                                                {{ number_format($oldPrice, 0, ',', '.') }}₫
+                                            </span>
+                                        </div>
+                                        <p class="text-xs text-gray-600">
+                                            Đã bán {{ rand(50, 999) }}
+                                        </p>
                                     </div>
                                 </div>
                             </a>
+                            
+                            <!-- Quick View Button -->
+                            <div class="px-3 pb-3">
+                                <button onclick="window.location.href='{{ route('products.show', $product->slug) }}'" 
+                                        class="w-full py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all rounded font-medium text-sm">
+                                    XEM NHANH
+                                </button>
+                            </div>
                         </article>
                     @endforeach
                 </div>

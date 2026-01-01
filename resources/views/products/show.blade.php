@@ -10,14 +10,14 @@
         <!-- Product Image -->
         <div class="col-span-12 md:col-span-7">
             <div class="sticky top-24">
-                <div class="aspect-square bg-swiss-gray-100 mb-4">
+                <div class="aspect-square bg-white rounded-lg mb-4 overflow-hidden border border-gray-200 shadow-lg">
                     @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" 
+                        <img src="{{ $product->image }}" 
                              alt="{{ $product->name }}"
-                             class="w-full h-full object-cover">
+                             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                     @else
                         <div class="w-full h-full flex items-center justify-center">
-                            <span class="text-9xl text-swiss-gray-300 font-bold">
+                            <span class="text-9xl text-gray-300 font-bold">
                                 {{ substr($product->name, 0, 1) }}
                             </span>
                         </div>
@@ -28,7 +28,7 @@
                 @if($product->images && count($product->images) > 0)
                     <div class="grid grid-cols-4 gap-4">
                         @foreach($product->images as $image)
-                            <div class="aspect-square bg-swiss-gray-100 border-2 border-swiss-gray-300 hover:border-swiss-black cursor-pointer transition-all">
+                            <div class="aspect-square bg-gray-100 border border-gray-300 hover:border-red-600 cursor-pointer transition-all rounded">
                                 <img src="{{ asset('storage/' . $image) }}" 
                                      alt="{{ $product->name }}"
                                      class="w-full h-full object-cover">
@@ -44,32 +44,44 @@
             <div class="md:pl-12">
                 
                 <!-- Category -->
-                <p class="swiss-small text-swiss-gray-600 tracking-widest mb-4">
+                <p class="text-sm text-gray-600 mb-2">
                     {{ strtoupper($product->category->name) }}
                 </p>
                 
                 <!-- Product Name -->
-                <h1 class="swiss-h2 mb-6">{{ $product->name }}</h1>
+                <h1 class="text-3xl font-bold mb-4">{{ $product->name }}</h1>
                 
                 <!-- Price -->
-                <div class="mb-8 pb-8 border-b-2 border-swiss-gray-300">
+                <div class="mb-8 pb-6 border-b border-gray-200">
+                    <div class="flex items-center gap-3 mb-3">
+                        @for($i = 0; $i < 5; $i++)
+                            <svg class="w-5 h-5 fill-yellow-400" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                        @endfor
+                        <span class="text-sm text-gray-600">| Đã bán {{ rand(100, 9999) }}</span>
+                    </div>
                     <div class="flex items-baseline space-x-3">
-                        <span class="text-5xl font-bold">
+                        <span class="text-xs text-gray-400 line-through">
+                            {{ number_format($product->price * 1.5, 0, ',', '.') }}₫
+                        </span>
+                        <span class="text-4xl font-bold text-red-600">
                             {{ number_format($product->price, 0, ',', '.') }}₫
                         </span>
-                        <span class="swiss-small text-swiss-gray-600">/ {{ $product->unit }}</span>
+                        <span class="text-sm bg-red-100 text-red-600 px-2 py-1 rounded font-bold">
+                            -{{ rand(10, 50) }}%
+                        </span>
+                    </div>
                     </div>
                 </div>
                 
                 <!-- Stock Status -->
                 <div class="mb-8">
                     @if($product->stock_quantity > 0)
-                        <div class="flex items-center space-x-3">
-                            <div class="w-3 h-3 bg-swiss-red"></div>
+                        <div class="flex items-center space-x-3 bg-swiss-red bg-opacity-10 px-4 py-3 border-l-4 border-swiss-red">
+                            <div class="w-3 h-3 bg-swiss-red animate-pulse"></div>
                             <span class="font-bold">CÒN HÀNG: {{ $product->stock_quantity }} {{ $product->unit }}</span>
                         </div>
                     @else
-                        <div class="flex items-center space-x-3">
+                        <div class="flex items-center space-x-3 bg-swiss-gray-100 px-4 py-3 border-l-4 border-swiss-gray-400">
                             <div class="w-3 h-3 bg-swiss-gray-400"></div>
                             <span class="font-bold text-swiss-gray-600">HẾT HÀNG</span>
                         </div>

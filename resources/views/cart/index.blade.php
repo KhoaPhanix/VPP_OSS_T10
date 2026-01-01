@@ -7,9 +7,9 @@
 <section class="swiss-container py-16">
     
     <!-- Header -->
-    <div class="mb-12">
-        <h1 class="swiss-h2 mb-4">GIỎ HÀNG CỦA BẠN</h1>
-        <div class="w-16 h-1 bg-swiss-red"></div>
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold mb-2">GIỎ HÀNG CỦA BẠN</h1>
+        <div class="w-16 h-1 bg-red-600"></div>
     </div>
 
     @if($cartItems->count() > 0)
@@ -17,30 +17,30 @@
             
             <!-- Cart Items -->
             <div class="col-span-12 lg:col-span-8">
-                <div class="border-2 border-swiss-black">
+                <div class="border border-gray-200 shadow-md rounded-lg overflow-hidden bg-white">
                     
                     <!-- Header -->
-                    <div class="hidden md:grid grid-cols-12 gap-4 p-6 border-b-2 border-swiss-black bg-swiss-gray-50">
-                        <div class="col-span-6 font-bold tracking-wide">SẢN PHẨM</div>
-                        <div class="col-span-2 font-bold tracking-wide text-center">ĐƠN GIÁ</div>
-                        <div class="col-span-2 font-bold tracking-wide text-center">SỐ LƯỢNG</div>
-                        <div class="col-span-2 font-bold tracking-wide text-right">THÀNH TIỀN</div>
+                    <div class="hidden md:grid grid-cols-12 gap-4 p-4 border-b border-gray-200 bg-gray-50">
+                        <div class="col-span-6 font-bold text-sm">SẢN PHẨM</div>
+                        <div class="col-span-2 font-bold text-sm text-center">ĐƠN GIÁ</div>
+                        <div class="col-span-2 font-bold text-sm text-center">SỐ LƯỢNG</div>
+                        <div class="col-span-2 font-bold text-sm text-right">THÀNH TIỀN</div>
                     </div>
 
                     <!-- Cart Items -->
                     @foreach($cartItems as $item)
-                        <div class="grid grid-cols-12 gap-4 p-6 border-b-2 border-swiss-gray-300 last:border-b-0">
+                        <div class="grid grid-cols-12 gap-4 p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-all">
                             
                             <!-- Product Info -->
                             <div class="col-span-12 md:col-span-6 flex items-center space-x-4">
-                                <div class="w-20 h-20 bg-swiss-gray-100 flex-shrink-0">
+                                <div class="w-20 h-20 bg-gray-100 flex-shrink-0 rounded overflow-hidden">
                                     @if($item->product->image)
-                                        <img src="{{ asset('storage/' . $item->product->image) }}" 
+                                        <img src="{{ $item->product->image }}" 
                                              alt="{{ $item->product->name }}"
                                              class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center">
-                                            <span class="text-2xl font-bold text-swiss-gray-300">
+                                            <span class="text-2xl font-bold text-gray-300">
                                                 {{ substr($item->product->name, 0, 1) }}
                                             </span>
                                         </div>
