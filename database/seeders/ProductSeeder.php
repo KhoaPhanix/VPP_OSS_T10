@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $thienLong->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-bi-thien-long.jpg',
             ],
             [
                 'code' => 'BV002',
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $bic->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1565282564265-83d07f83ad2c?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-bi-cristal.jpg',
             ],
             [
                 'code' => 'BV003',
@@ -59,7 +59,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 1000,
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1603354350317-6f7aaa5911c5?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-chi-2b.jpg',
             ],
             [
                 'code' => 'BV004',
@@ -71,7 +71,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $thienLong->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1588166524941-3bf9f8b09a8a?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-gel.jpg',
             ],
             [
                 'code' => 'BV005',
@@ -82,7 +82,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 200,
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1511548774318-563182fe8d03?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-long-dau.jpg',
             ],
             [
                 'code' => 'BV006',
@@ -93,7 +93,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 300,
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $bic->id,
-                'image' => 'https://images.unsplash.com/photo-1594834818808-ba3b7d9e96c9?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-da-quang.jpg',
             ],
             [
                 'code' => 'BV007',
@@ -105,7 +105,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $butVietCategory->id,
                 'supplier_id' => $thienLong->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1565266339552-88f4b0f99654?w=400&h=400&fit=crop',
+                'image' => '/images/products/but-thien-long-lua-thien.jpg',
             ],
             
             // Giấy tờ
@@ -119,7 +119,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $giayToCategory->id,
                 'supplier_id' => $paper->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1544256718-3bcf237f3974?w=400&h=400&fit=crop',
+                'image' => '/images/products/giay-a4.jpg',
             ],
             [
                 'code' => 'GT002',
@@ -130,7 +130,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 300,
                 'category_id' => $giayToCategory->id,
                 'supplier_id' => $paper->id,
-                'image' => 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=400&h=400&fit=crop',
+                'image' => '/images/products/note-vang.jpg',
             ],
             [
                 'code' => 'GT003',
@@ -141,7 +141,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 150,
                 'category_id' => $giayToCategory->id,
                 'supplier_id' => $paper->id,
-                'image' => 'https://images.unsplash.com/photo-1612538498456-e861df91d4d0?w=400&h=400&fit=crop',
+                'image' => '/images/products/giay-a4-mau.jpg',
             ],
             [
                 'code' => 'GT004',
@@ -152,7 +152,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 100,
                 'category_id' => $giayToCategory->id,
                 'supplier_id' => $paper->id,
-                'image' => 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=400&fit=crop',
+                'image' => '/images/products/giay-bia-a4.jpg',
             ],
             [
                 'code' => 'GT005',
@@ -163,7 +163,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 120,
                 'category_id' => $giayToCategory->id,
                 'supplier_id' => $paper->id,
-                'image' => 'https://images.unsplash.com/photo-1602140022939-e0c5ad9f1471?w=400&h=400&fit=crop',
+                'image' => '/images/products/giay-a3.jpg',
             ],
             
             // Sổ tay
@@ -177,7 +177,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $soTayCategory->id,
                 'supplier_id' => $thienLong->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=400&fit=crop',
+                'image' => '/images/products/so-tay-bia-da.jpg',
             ],
             [
                 'code' => 'ST002',
@@ -188,7 +188,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 250,
                 'category_id' => $soTayCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&h=400&fit=crop',
+                'image' => '/images/products/so-lo-xo.jpg',
             ],
             [
                 'code' => 'ST003',
@@ -200,7 +200,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $soTayCategory->id,
                 'supplier_id' => $paper->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&h=400&fit=crop',
+                'image' => '/images/products/so-tay-monleskin.jpg',
             ],
             [
                 'code' => 'ST004',
@@ -211,7 +211,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 180,
                 'category_id' => $soTayCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1611224885990-ab7363d1f2a8?w=400&h=400&fit=crop',
+                'image' => '/images/products/planner.jpg',
             ],
             [
                 'code' => 'ST005',
@@ -222,7 +222,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 100,
                 'category_id' => $soTayCategory->id,
                 'supplier_id' => $paper->id,
-                'image' => 'https://images.unsplash.com/photo-1579762593131-b7a2e76d98d5?w=400&h=400&fit=crop',
+                'image' => '/images/products/so-tay-sketch.jpg',
             ],
             
             // Dụng cụ học tập
@@ -235,7 +235,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 400,
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?w=400&h=400&fit=crop',
+                'image' => '/images/products/thuot-ke-nhua.jpg',
             ],
             [
                 'code' => 'DC002',
@@ -247,7 +247,7 @@ class ProductSeeder extends Seeder
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
                 'is_featured' => true,
-                'image' => 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=400&fit=crop',
+                'image' => '/images/products/tay-trang-thien-long.jpg',
             ],
             [
                 'code' => 'DC003',
@@ -258,7 +258,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 350,
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1581450214665-0b0b37ce6b6c?w=400&h=400&fit=crop',
+                'image' => '/images/products/got-but-chi.jpg',
             ],
             [
                 'code' => 'DC004',
@@ -269,7 +269,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 180,
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1572461405471-8a5f73ecc5bd?w=400&h=400&fit=crop',
+                'image' => '/images/products/bo-compa.jpg',
             ],
             [
                 'code' => 'DC005',
@@ -280,7 +280,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 220,
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1611537568047-33592b7e8098?w=400&h=400&fit=crop',
+                'image' => '/images/products/bam-kim-so-10.jpg',
             ],
             [
                 'code' => 'DC006',
@@ -291,7 +291,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 280,
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&h=400&fit=crop',
+                'image' => '/images/products/hop-but-nhua.jpg',
             ],
             [
                 'code' => 'DC007',
@@ -302,7 +302,7 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => 160,
                 'category_id' => $dungCuCategory->id,
                 'supplier_id' => $thienLong->id,
-                'image' => 'https://images.unsplash.com/photo-1587467512961-120760940315?w=400&h=400&fit=crop',
+                'image' => '/images/products/keo-cat-van-phong.jpg',
             ],
         ];
 

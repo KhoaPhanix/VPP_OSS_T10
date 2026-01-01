@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="hidden md:block">
-                    <img src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=800&h=600&fit=crop" alt="Promotion" class="w-full h-full object-cover">
+                    <img src="{{ asset('/images/products/banner.png') }}" alt="Promotion" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
@@ -83,11 +83,9 @@
                 <a href="{{ route('products.show', $product->slug) }}" class="block">
                     <!-- Image -->
                     <div class="aspect-square bg-gradient-to-br from-swiss-gray-100 to-swiss-gray-200 mb-4 overflow-hidden relative shadow-md">
-                        <div class="w-full h-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                            <span class="text-6xl text-swiss-gray-300 font-bold group-hover:text-swiss-red transition-colors duration-500">
-                                {{ substr($product->name, 0, 1) }}
-                            </span>
-                        </div>
+                        <img src="{{ asset($product->image) }}" 
+                             alt="{{ $product->name }}" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                         
                         <!-- Badge -->
                         <div class="absolute top-4 left-4 bg-gradient-to-r from-swiss-red to-red-700 text-white px-3 py-1 text-xs font-bold shadow-lg">
