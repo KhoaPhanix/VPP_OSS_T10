@@ -72,11 +72,30 @@ class CartController extends Controller
      */
     public function update(Request $request, $cartId)
     {
+        $cart = Cart::with('product')->where('user_id', Auth::id())->findOrFail($cartId);
+
+        // Handle increase/decrease actions from buttons
+        if ($request->has('action')) {
+            $action = $request->action;
+            $newQuantity = $action === 'increase' ? $cart->quantity + 1 : $cart->quantity - 1;
+
+            if ($newQuantity < 1) {
+                $cart->delete();
+                return back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
+            }
+
+            if (!$cart->product->hasStock($newQuantity)) {
+                return back()->with('error', 'Không đủ hàng trong kho!');
+            }
+
+            $cart->update(['quantity' => $newQuantity]);
+            return back()->with('success', 'Đã cập nhật giỏ hàng!');
+        }
+
+        // Handle direct quantity input
         $request->validate([
             'quantity' => 'required|integer|min:1',
         ]);
-
-        $cart = Cart::where('user_id', Auth::id())->findOrFail($cartId);
 
         if (!$cart->product->hasStock($request->quantity)) {
             return back()->with('error', 'Không đủ hàng trong kho!');

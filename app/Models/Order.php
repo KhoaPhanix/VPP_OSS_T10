@@ -17,6 +17,7 @@ class Order extends Model
         'shipping_address',
         'phone',
         'notes',
+        'payment_method',
         'reject_reason',
         'approved_at',
         'rejected_at',

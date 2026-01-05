@@ -88,7 +88,7 @@
         </aside>
         
         <!-- Products Grid -->
-        <div class="col-span-12 md:col-span-9">
+        <div class="col-span-12 md:col-span-9" x-data="{ viewMode: 'grid' }">
             
             <!-- Results Count -->
             <div class="flex items-center justify-between mb-6">
@@ -97,14 +97,18 @@
                     <p class="text-gray-600">{{ $products->total() }} sản phẩm có sẵn</p>
                 </div>
                 
-                <!-- View Toggle (optional) -->
-                <div class="hidden md:flex space-x-2 bg-gray-100 p-1 rounded-lg">
-                    <button class="p-2 bg-red-600 text-white rounded">
+                <!-- View Toggle -->
+                <div class="hidden md:flex space-x-1 bg-gray-100 p-1 rounded-lg">
+                    <button @click="viewMode = 'grid'" 
+                            :class="viewMode === 'grid' ? 'bg-red-600 text-white' : 'text-gray-600 hover:bg-white hover:text-gray-900'"
+                            class="p-2 rounded transition-all">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
                         </svg>
                     </button>
-                    <button class="p-2 text-gray-600 hover:bg-white hover:text-gray-900 rounded transition-all">
+                    <button @click="viewMode = 'list'" 
+                            :class="viewMode === 'list' ? 'bg-red-600 text-white' : 'text-gray-600 hover:bg-white hover:text-gray-900'"
+                            class="p-2 rounded transition-all">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
                         </svg>
@@ -114,7 +118,12 @@
             
             <!-- Products -->
             @if($products->count() > 0)
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+                <!-- Grid View -->
+                <div x-show="viewMode === 'grid'" 
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
                     @foreach($products as $product)
                         <article class="group bg-white border border-gray-200 hover:shadow-xl transition-all duration-300 rounded-lg overflow-hidden">
                             <a href="{{ route('products.show', $product->slug) }}" class="block">
@@ -190,6 +199,125 @@
                                         class="w-full py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all rounded font-medium text-sm">
                                     XEM NHANH
                                 </button>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+                
+                <!-- List View -->
+                <div x-show="viewMode === 'list'" 
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     class="space-y-4 mb-12">
+                    @foreach($products as $product)
+                        <article class="group bg-white border border-gray-200 hover:shadow-lg transition-all duration-300 rounded-lg overflow-hidden">
+                            <div class="flex">
+                                <!-- Image -->
+                                <a href="{{ route('products.show', $product->slug) }}" class="flex-shrink-0 w-40 h-40 md:w-48 md:h-48">
+                                    <div class="w-full h-full bg-white overflow-hidden relative">
+                                        @if($product->image)
+                                            <img src="{{ $product->image }}" 
+                                                 alt="{{ $product->name }}"
+                                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center bg-gray-100">
+                                                <span class="text-4xl text-gray-300 font-bold">
+                                                    {{ substr($product->name, 0, 1) }}
+                                                </span>
+                                            </div>
+                                        @endif
+                                        
+                                        <!-- Badges -->
+                                        <div class="absolute top-2 left-2 flex flex-col gap-1">
+                                            @if($product->is_featured)
+                                                <span class="bg-red-600 text-white px-2 py-1 text-xs font-bold rounded">HOT</span>
+                                            @endif
+                                        </div>
+                                        
+                                        @php
+                                            $discount = rand(10, 40);
+                                            $oldPrice = $product->price * (100 + $discount) / 100;
+                                        @endphp
+                                        <div class="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs font-bold rounded-full">
+                                            -{{ $discount }}%
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                                <!-- Info -->
+                                <div class="flex-1 p-4 flex flex-col justify-between">
+                                    <div>
+                                        <a href="{{ route('products.show', $product->slug) }}">
+                                            <h3 class="text-lg font-medium mb-2 group-hover:text-red-600 transition-colors line-clamp-2">
+                                                {{ $product->name }}
+                                            </h3>
+                                        </a>
+                                        
+                                        <p class="text-gray-600 text-sm mb-3 line-clamp-2 hidden md:block">
+                                            {{ $product->description ?: 'Sản phẩm chất lượng cao, phù hợp cho mọi nhu cầu văn phòng phẩm.' }}
+                                        </p>
+                                        
+                                        <!-- Rating -->
+                                        <div class="flex items-center gap-1 mb-2">
+                                            @for($i = 0; $i < 5; $i++)
+                                                <svg class="w-4 h-4 {{ $i < 4 ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                </svg>
+                                            @endfor
+                                            <span class="text-gray-500 text-sm ml-2">({{ rand(50, 500) }} đánh giá)</span>
+                                        </div>
+                                        
+                                        <!-- Stock info -->
+                                        <div class="flex items-center gap-4 text-sm">
+                                            @if($product->stock_quantity > 0)
+                                                <span class="text-green-600 flex items-center gap-1">
+                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                    Còn hàng
+                                                </span>
+                                            @else
+                                                <span class="text-red-600">Hết hàng</span>
+                                            @endif
+                                            <span class="text-gray-500">Đã bán {{ rand(50, 999) }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between mt-4">
+                                        <!-- Price -->
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-red-600 font-bold text-xl">
+                                                    {{ number_format($product->price, 0, ',', '.') }}₫
+                                                </span>
+                                                <span class="text-gray-400 line-through text-sm">
+                                                    {{ number_format($oldPrice, 0, ',', '.') }}₫
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Actions -->
+                                        <div class="flex gap-2">
+                                            <a href="{{ route('products.show', $product->slug) }}" 
+                                               class="px-4 py-2 bg-red-600 text-white hover:bg-red-700 transition-all rounded font-medium text-sm">
+                                                XEM CHI TIẾT
+                                            </a>
+                                            @auth
+                                                @if($product->stock_quantity > 0)
+                                                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="quantity" value="1">
+                                                        <button type="submit" 
+                                                                class="px-4 py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white transition-all rounded font-medium text-sm">
+                                                            THÊM GIỎ
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @endauth
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </article>
                     @endforeach

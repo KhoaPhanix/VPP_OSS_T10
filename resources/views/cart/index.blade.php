@@ -130,7 +130,7 @@
             <div class="col-span-12 lg:col-span-4">
                 <div class="border-2 border-swiss-black p-8 sticky top-24">
                     
-                    <h2 class="font-bold text-2xl mb-6 tracking-wide">TỔNG ĐơN HÀNG</h2>
+                    <h2 class="font-bold text-2xl mb-6 tracking-wide">TỔNG ĐƠN HÀNG</h2>
                     
                     <div class="space-y-4 pb-6 border-b-2 border-swiss-gray-300">
                         <div class="flex justify-between">

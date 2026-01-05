@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vpp_app
+    restart: unless-stopped
+    working_dir: /var/www
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - vpp_network
+    environment:
+      - DB_HOST=mysql
+      - DB_DATABASE=vpp_oss_t10
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  mysql:
+    image: mysql:8.0
+    container_name: vpp_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: vpp_oss_t10
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: vpp_user
+      MYSQL_PASSWORD: vpp_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - vpp_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  vpp_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
