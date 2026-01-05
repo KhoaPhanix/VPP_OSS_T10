@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::post('/orders/{order}/reorder', [OrderController::class, 'reorder'])->name('orders.reorder');
 
     // Chat
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
