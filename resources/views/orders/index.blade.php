@@ -55,9 +55,19 @@
                             <span class="text-xl font-bold text-swiss-red">
                                 {{ number_format($order->total_amount, 0, ',', '.') }}₫
                             </span>
-                            <a href="{{ route('orders.show', $order) }}" class="btn-ghost">
-                                XEM CHI TIẾT →
-                            </a>
+                            <div class="flex gap-2">
+                                @if($order->status === 'completed')
+                                    <form action="{{ route('orders.reorder', $order) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="btn-primary text-sm">
+                                            🔄 MUA LẠI
+                                        </button>
+                                    </form>
+                                @endif
+                                <a href="{{ route('orders.show', $order) }}" class="btn-ghost">
+                                    XEM CHI TIẾT →
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

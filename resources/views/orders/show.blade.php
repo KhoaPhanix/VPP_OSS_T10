@@ -154,6 +154,33 @@
                 </div>
             </div>
 
+            <!-- Actions -->
+            @if($order->isCompleted())
+                <div class="border-2 border-swiss-black">
+                    <div class="p-4">
+                        <form action="{{ route('orders.reorder', $order) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn-primary w-full">
+                                🔄 MUA LẠI
+                            </button>
+                        </form>
+                        <p class="text-xs text-swiss-gray-600 mt-2 text-center">Thêm lại sản phẩm vào giỏ hàng</p>
+                    </div>
+                </div>
+            @endif
+
+            @if($order->isPending())
+                <div class="border-2 border-swiss-black">
+                    <div class="p-4">
+                        <button 
+                            onclick="showCancelModal()" 
+                            class="btn-ghost w-full border-2 border-red-500 text-red-600 hover:bg-red-50">
+                            ❌ YÊU CẦU HỦY ĐơN
+                        </button>
+                    </div>
+                </div>
+            @endif
+
             <!-- Contact -->
             <div class="border-2 border-swiss-black p-4">
                 <p class="text-sm text-swiss-gray-600 mb-2">Có thắc mắc về đơn hàng?</p>
@@ -164,4 +191,50 @@
         </div>
     </div>
 </div>
+
+<!-- Modal hủy đơn -->
+<div id="cancelModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white border-4 border-swiss-black max-w-md w-full">
+        <div class="p-6 border-b-2 border-swiss-black bg-swiss-gray-50">
+            <h3 class="text-xl font-bold">YÊU CẦU HỦY ĐƠN HÀNG</h3>
+        </div>
+        <div class="p-6">
+            <div class="text-center mb-6">
+                <div class="text-6xl mb-4">📞</div>
+                <p class="text-lg mb-2">Để hủy đơn hàng, vui lòng liên hệ:</p>
+                <a href="tel:0383277120" class="text-3xl font-bold text-swiss-red hover:underline">
+                    0383277120
+                </a>
+                <p class="text-sm text-swiss-gray-600 mt-4">
+                    Chúng tôi sẽ xác nhận và xử lý yêu cầu hủy đơn của bạn trong thời gian sớm nhất.
+                </p>
+            </div>
+            <div class="space-y-3">
+                <a href="tel:0383277120" class="btn-primary w-full text-center">
+                    GỌI NGAY
+                </a>
+                <button onclick="closeCancelModal()" class="btn-ghost w-full">
+                    ĐÓNG
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showCancelModal() {
+    document.getElementById('cancelModal').classList.remove('hidden');
+}
+
+function closeCancelModal() {
+    document.getElementById('cancelModal').classList.add('hidden');
+}
+
+// Đóng modal khi click bên ngoài
+document.getElementById('cancelModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeCancelModal();
+    }
+});
+</script>
 @endsection

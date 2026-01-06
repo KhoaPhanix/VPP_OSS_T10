@@ -104,4 +104,54 @@ class OrderController extends Controller
             return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Mua lại đơn hàng (thêm sản phẩm vào giỏ và chuyển đến checkout)
+     */
+    public function reorder($id)
+    {
+        $order = Order::with('orderDetails.product')
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        // Chỉ cho phép mua lại đơn hàng đã hoàn thành
+        if (!$order->isCompleted()) {
+            return back()->with('error', 'Chỉ có thể mua lại đơn hàng đã hoàn thành!');
+        }
+
+        DB::beginTransaction();
+        try {
+            // Xóa giỏ hàng hiện tại
+            Cart::where('user_id', Auth::id())->delete();
+
+            // Thêm sản phẩm từ đơn hàng vào giỏ
+            foreach ($order->orderDetails as $detail) {
+                // Kiểm tra sản phẩm còn tồn tại và còn hàng
+                if ($detail->product && $detail->product->stock >= $detail->quantity) {
+                    Cart::create([
+                        'user_id' => Auth::id(),
+                        'product_id' => $detail->product_id,
+                        'quantity' => $detail->quantity,
+                    ]);
+                } else {
+                    // Nếu sản phẩm hết hàng, thêm với số lượng tối đa có thể
+                    if ($detail->product && $detail->product->stock > 0) {
+                        Cart::create([
+                            'user_id' => Auth::id(),
+                            'product_id' => $detail->product_id,
+                            'quantity' => $detail->product->stock,
+                        ]);
+                    }
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->route('checkout.index')
+                ->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());
+        }
+    }
 }
