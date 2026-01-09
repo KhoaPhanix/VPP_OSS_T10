@@ -29,7 +29,7 @@
                     <div class="grid grid-cols-4 gap-4">
                         @foreach($product->images as $image)
                             <div class="aspect-square bg-gray-100 border border-gray-300 hover:border-red-600 cursor-pointer transition-all rounded">
-                                <img src="{{ asset('storage/' . $image) }}" 
+                                <img src="{{ asset($image) }}" 
                                      alt="{{ $product->name }}"
                                      class="w-full h-full object-cover">
                             </div>

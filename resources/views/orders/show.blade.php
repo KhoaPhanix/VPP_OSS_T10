@@ -34,7 +34,7 @@
                     @foreach($order->orderDetails as $detail)
                         <div class="p-4 flex items-center gap-4">
                             @if($detail->product->image)
-                                <img src="{{ asset('storage/' . $detail->product->image) }}" 
+                                <img src="{{ asset($detail->product->image) }}" 
                                      alt="{{ $detail->product->name }}"
                                      class="w-16 h-16 object-cover border-2 border-swiss-gray-200">
                             @else
