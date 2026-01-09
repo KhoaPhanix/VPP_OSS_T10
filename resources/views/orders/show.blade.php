@@ -181,7 +181,7 @@
                         <button 
                             onclick="showCancelModal()" 
                             class="btn-ghost w-full border-2 border-red-500 text-red-600 hover:bg-red-50">
-                            ❌ YÊU CẦU HỦY ĐơN
+                            ❌ YÊU CẦU HỦY ĐƠN
                         </button>
                     </div>
                 </div>
