@@ -124,31 +124,76 @@ class OrderController extends Controller
             // Xóa giỏ hàng hiện tại
             Cart::where('user_id', Auth::id())->delete();
 
+            $addedProducts = [];
+            $outOfStockProducts = [];
+            $adjustedProducts = [];
+            $unavailableProducts = [];
+
             // Thêm sản phẩm từ đơn hàng vào giỏ
             foreach ($order->orderDetails as $detail) {
-                // Kiểm tra sản phẩm còn tồn tại và còn hàng
-                if ($detail->product && $detail->product->stock >= $detail->quantity) {
+                // Kiểm tra sản phẩm còn tồn tại
+                if (!$detail->product) {
+                    $unavailableProducts[] = 'Sản phẩm #' . $detail->product_id;
+                    continue;
+                }
+
+                $productName = $detail->product->name;
+
+                // Kiểm tra còn đủ hàng
+                if ($detail->product->stock >= $detail->quantity) {
                     Cart::create([
                         'user_id' => Auth::id(),
                         'product_id' => $detail->product_id,
                         'quantity' => $detail->quantity,
                     ]);
+                    $addedProducts[] = $productName;
+                } elseif ($detail->product->stock > 0) {
+                    // Thêm với số lượng tối đa có thể
+                    Cart::create([
+                        'user_id' => Auth::id(),
+                        'product_id' => $detail->product_id,
+                        'quantity' => $detail->product->stock,
+                    ]);
+                    $adjustedProducts[] = "{$productName} (chỉ còn {$detail->product->stock} sản phẩm)";
                 } else {
-                    // Nếu sản phẩm hết hàng, thêm với số lượng tối đa có thể
-                    if ($detail->product && $detail->product->stock > 0) {
-                        Cart::create([
-                            'user_id' => Auth::id(),
-                            'product_id' => $detail->product_id,
-                            'quantity' => $detail->product->stock,
-                        ]);
-                    }
+                    $outOfStockProducts[] = $productName;
                 }
             }
 
             DB::commit();
 
-            return redirect()->route('checkout.index')
-                ->with('success', 'Đã thêm sản phẩm vào giỏ hàng!');
+            // Tạo thông báo chi tiết
+            $messages = [];
+            
+            if (count($addedProducts) > 0) {
+                $messages[] = 'Đã thêm ' . count($addedProducts) . ' sản phẩm vào giỏ hàng.';
+            }
+            
+            if (count($adjustedProducts) > 0) {
+                $messages[] = 'Một số sản phẩm đã được điều chỉnh số lượng: ' . implode(', ', $adjustedProducts) . '.';
+            }
+            
+            if (count($outOfStockProducts) > 0) {
+                $messages[] = 'Các sản phẩm hết hàng: ' . implode(', ', $outOfStockProducts) . '.';
+            }
+            
+            if (count($unavailableProducts) > 0) {
+                $messages[] = 'Các sản phẩm không còn tồn tại: ' . implode(', ', $unavailableProducts) . '.';
+            }
+
+            // Kiểm tra nếu không có sản phẩm nào được thêm
+            if (count($addedProducts) == 0 && count($adjustedProducts) == 0) {
+                return back()->with('error', 'Không thể mua lại vì tất cả sản phẩm đã hết hàng hoặc không còn tồn tại!');
+            }
+
+            $message = implode(' ', $messages);
+            
+            // Nếu có sản phẩm bị điều chỉnh hoặc hết hàng, hiển thị warning
+            if (count($adjustedProducts) > 0 || count($outOfStockProducts) > 0 || count($unavailableProducts) > 0) {
+                return redirect()->route('checkout.index')->with('warning', $message);
+            }
+
+            return redirect()->route('checkout.index')->with('success', $message);
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Có lỗi xảy ra: ' . $e->getMessage());

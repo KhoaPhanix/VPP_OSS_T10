@@ -227,22 +227,31 @@
     </header>
     
     <!-- Flash Messages -->
-    @if(session('success') || session('error'))
+    @if(session('success') || session('error') || session('warning'))
         <div class="swiss-container py-4 animate-fade-in">
             @if(session('success'))
-                <div class="border-l-4 border-swiss-red bg-swiss-gray-50 p-4">
+                <div class="border-l-4 border-green-500 bg-green-50 p-4">
                     <div class="flex items-center">
-                        <div class="w-6 h-6 bg-swiss-red text-white flex items-center justify-center mr-3">✓</div>
-                        <p class="font-medium">{{ session('success') }}</p>
+                        <div class="w-6 h-6 bg-green-500 text-white flex items-center justify-center mr-3 rounded-full">✓</div>
+                        <p class="font-medium text-green-800">{{ session('success') }}</p>
+                    </div>
+                </div>
+            @endif
+            
+            @if(session('warning'))
+                <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4">
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 bg-yellow-500 text-white flex items-center justify-center mr-3 rounded-full">⚠</div>
+                        <p class="font-medium text-yellow-800">{{ session('warning') }}</p>
                     </div>
                 </div>
             @endif
             
             @if(session('error'))
-                <div class="border-l-4 border-swiss-black bg-swiss-gray-50 p-4">
+                <div class="border-l-4 border-red-500 bg-red-50 p-4">
                     <div class="flex items-center">
-                        <div class="w-6 h-6 bg-swiss-black text-white flex items-center justify-center mr-3">!</div>
-                        <p class="font-medium">{{ session('error') }}</p>
+                        <div class="w-6 h-6 bg-red-500 text-white flex items-center justify-center mr-3 rounded-full">✕</div>
+                        <p class="font-medium text-red-800">{{ session('error') }}</p>
                     </div>
                 </div>
             @endif

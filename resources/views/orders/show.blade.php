@@ -157,14 +157,20 @@
             <!-- Actions -->
             @if($order->isCompleted())
                 <div class="border-2 border-swiss-black">
+                    <div class="p-4 border-b-2 border-swiss-black bg-swiss-gray-50">
+                        <h3 class="font-bold">MUA LẠI ĐƠN HÀNG</h3>
+                    </div>
                     <div class="p-4">
                         <form action="{{ route('orders.reorder', $order) }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn-primary w-full">
-                                🔄 MUA LẠI
+                            <button type="submit" class="btn-primary w-full flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                MUA LẠI ĐƠN HÀNG NÀY
                             </button>
                         </form>
-                        <p class="text-xs text-swiss-gray-600 mt-2 text-center">Thêm lại sản phẩm vào giỏ hàng</p>
+                        <p class="text-xs text-swiss-gray-600 mt-2 text-center">Các sản phẩm sẽ được thêm vào giỏ hàng của bạn</p>
                     </div>
                 </div>
             @endif
